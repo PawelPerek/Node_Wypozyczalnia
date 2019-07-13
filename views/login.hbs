@@ -1,0 +1,130 @@
+<div id="all">
+</div>
+
+<div id="allog">
+    {{#if msg}}
+        <span class="error">{{msg}}</span>
+    {{/if}}
+    <form id="adminform" class="login_width" action="/loginHandler" method="post">
+        <label for="">Login: <input name="login" type="text"></label>
+        <label for="">Hasło: <input name="passwd" type="password"></label>
+        <input type="submit" value="Zaloguj się">
+    </form>
+    <form action="/">
+        <input class="login_width" type="submit" value="Powrót">
+    </form>
+</div>
+
+<script>
+    var questions = [
+        {
+            title: "Wybierz najgorsze przeglądarki",
+            answers: [
+                "/captcha/chrome.png",
+                "/captcha/explorer.png",
+                "/captcha/opera.png",
+                "/captcha/safari.png"
+            ],
+            key: [
+                "explorer.png"
+            ]
+        },
+        {
+            title: "Wybierz wszystkie warzywa",
+            answers: [
+                "/captcha/mieso.png",
+                "/captcha/marchew.png",
+                "/captcha/pomidor.png",
+                "/captcha/sliwka.png"
+            ],
+            key: [
+                "marchew.png",
+                "pomidor.png"
+            ]
+        },
+        {
+            title: "Wybierz wszystkie drapieżniki",
+            answers: [
+                "/captcha/lew.png",
+                "/captcha/gepard.png",
+                "/captcha/swinia.png",
+                "/captcha/krolik.png"
+            ],
+            key: [
+                "gepard.png",
+                "lew.png"
+            ]
+        },
+        {
+            title: "Wybierz najgorsze systemy operacyjne",
+            answers: [
+                "/captcha/windows.png",
+                "/captcha/linux.png",
+                "/captcha/osx.png",
+                "/captcha/freebsd.png"
+            ],
+            key: [
+                "windows.png",
+                "linux.png",
+                "freebsd.png"
+            ]
+        },
+    ]
+    var arr = [];
+    function render(num) {
+        $("#all").css({"justify-content": "center", position: "absolute", "z-index": 2});
+        $("#allog").css({opacity: 0, "z-index": 1})
+        let title = $("<h1>");
+        let poj = $("<poj>").css({
+            margin: "50px"
+        });
+        let btn = $("<button>").text("Sprawdź").on("click", function() {
+            check(num);
+        }).addClass("check")
+        questions[num].answers.randomize();
+        for(let el of range(questions[num].answers.length)) {
+            let img = $("<img>");
+            $(img).attr('src', questions[num].answers[el]);
+            $(img).attr('width', 100);
+            $(img).attr('height', 100);
+            $(img).on("click", function() {
+                let _tmp = this.src.split("/");
+                let tmp = _tmp[_tmp.length - 1]
+                if(!arr.includes(tmp)){
+                    $(img).css({
+                        outline: "solid 2px silver",
+                    })
+                    arr.push(tmp);
+                }
+                else {
+                    $(img).removeAttr("style")
+                    arr.remove(arr.indexOf(tmp));
+                }
+            })
+            $(poj).append(img);
+        }
+        $(title).text(questions[num].title);
+        $("#all").append(title, poj, btn);
+        $("poj").css({
+            display: "flex",
+            width: $("h1").width(),
+            "justify-content": "space-between",
+        })
+    }
+    function check(num) {
+        console.log(arr.sort(), questions[num].key.sort())
+        if(arr.sort().is(questions[num].key.sort()))
+            pass();
+        else
+            location.reload();
+    }
+    function pass() {
+        console.log('xd')
+        $("#all").animate({"opacity": 0}, 300);
+        $("#allog").animate({"opacity": 1}, 300);
+        setTimeout(() => {
+            $("#all").css("display", "none");
+        }, 300)
+    }
+    render(Number.random(3));
+</script>

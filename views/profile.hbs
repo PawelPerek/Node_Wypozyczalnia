@@ -1,0 +1,131 @@
+<button id="gb">
+Powrót
+</button>
+{{#with doc}}
+    <div id="body">
+        <div class="row">
+            <img width="400" src="/{{src}}" alt="">
+            <form action="/edit" method="get">
+            <input type="hidden" name="id" value="{{id}}">
+                <table class="column" id="tbl">
+                    <tr>
+                        <th id="title">{{title}}</th>
+                        {{#if ../admin}}
+                            <td>
+                                <button type="button" id="titlebt">Edytuj</button>
+                            </td>
+                        {{/if}}
+                        </tr>
+                    <tr>
+                        <td id="genre">{{genre}}</td>
+                        {{#if ../admin}}
+                            <td>
+                                <button type="button" id="genrebt">Edytuj</button>
+                            </td>
+                        {{/if}}
+                        </tr> 
+                    <tr>
+                        <td id="description">{{description}}</td>
+                        {{#if ../admin}}
+                            <td>
+                                <button type="button" id="descriptionbt">Edytuj</button>
+                            </td>
+                        {{/if}}
+                    </tr>   
+                    <tr>
+                        <td id="price">{{currency price}}</td>
+                        {{#if ../admin}}
+                            <td>
+                                <button type="button" id="pricebt">Edytuj</button>
+                            </td>
+                        {{/if}}
+                    </tr>    
+                </table>
+            </form>
+        </div>
+    </div>
+{{/with}}
+{{#if admin}}
+    <script>
+        var title = false, titleContent;
+        var genre = false, genreContent;
+        var description = false, descriptionContent;
+        var price = false, priceContent;
+        var row;
+        $("button").css("padding", "6px")
+        $("#titlebt").on("click", function() {
+            if(!title) {
+                $(this).text("Anuluj");
+                titleContent = $("#title").text();
+                $("#title").html($(`<input name="title" value="${$("#title").text()}">`));
+                title = true;
+            }
+            else {
+                $(this).text("Edytuj");
+                $("#title").html(titleContent);
+                title = false;
+            }
+            check();
+        })
+        $("#genrebt").on("click", function() {
+            if(!genre) {
+                $(this).text("Anuluj");
+                genreContent = $("#genre").text();
+                $("#genre").html($(`<input name="genre" value="${$("#genre").text()}">`));
+                genre = true;
+            }
+            else {
+                $(this).text("Edytuj");
+                $("#genre").html(genreContent);
+                genre = false;
+            }
+            check();
+        })
+        
+        $("#descriptionbt").on("click", function() {
+            if(!description) {
+                $(this).text("Anuluj");
+                descriptionContent = $("#description").text();
+                $("#description").html($(`<textarea name="description"> ${$("#description").text()}"</textarea>`));
+                description = true;
+            }
+            else {
+                $(this).text("Edytuj");
+                $("#description").html(descriptionContent);
+                description = false;
+            }
+            check();
+        })
+        $("#pricebt").on("click", function() {
+            if(!price) {
+                $(this).text("Anuluj");
+                priceContent = $("#price").text();
+                $("#price").html($(`<input name="price" type="number" value="${parseInt($("#price").text())}">`));
+                price = true;
+            }
+            else {
+                $(this).text("Edytuj");
+                $("#price").html(priceContent);
+                price = false;
+            }
+            check();
+        })
+        function check() {
+            if((title || genre || description || price) && !row) {
+                row = $("<tr>");
+                var cell = $("<td>");
+                var sub = $("<input type='submit' value='Zapisz zmiany'>")
+                $(cell).append(sub)
+                $(row).append(cell);
+                $("table").append(row);
+            }
+            else if(!title && !genre && !description && !price){
+                $(row).remove();
+                row = "";
+            }
+        }
+    </script>
+{{/if}}
+<script>
+    $("#gb").on("click", () => history.back());
+</script>

@@ -1,0 +1,16 @@
+<div id="allog">
+    {{#if doc}}
+        <span class="warning">Dodano</span>
+    {{/if}}
+    <form id="adminform" class="add_width" enctype="multipart/form-data" method="post" action="/handleAdd">
+        <label>Nazwa: <input type="text" required  name="title"></label>
+        <label>Gatunek: <input type="text"required  name="genre"></label>  
+        <label>Cena: <input type="number" required  name="price"></label>
+        <label>Opis: <input type="text" name="description"></label>
+        <label>Zdjęcie: <input type="file" required accept="image/*" name="imagetoupload"></label>        
+        <input type="submit" value="Dodaj film">
+    </form>
+    <form method="get" action="/admin">
+        <input class="add_width" type="submit" value="Powrót">
+    </form>
+</div>

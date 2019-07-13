@@ -1,0 +1,28 @@
+<div id="all">
+    {{#if msg}}
+        <span class="error">{{msg}}</span>
+    {{else}}
+        {{#if wrn}}
+            <span class="error">
+                {{#each wrn}}
+                    {{this}}
+                {{/each}}
+                zostały już zakupione 
+            </span>
+        {{/if}}
+        <table id="tbl">
+            <tr>
+                <th>    
+                    Zakupione filmy:
+                </th>
+            </tr>
+        {{#each docs}}
+            <tr>
+                <td>{{title}}</td>
+            </tr>
+        {{/each}}
+        </table>
+    {{/if}}
+    <a href="/">Powrót na stroną główną</a>
+</div>
+

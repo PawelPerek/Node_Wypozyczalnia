@@ -1,0 +1,31 @@
+<div id="all">
+    <form action="/clear" method="get" class="ind_form search">
+        <h2>Wyszukaj wg tytułu bez sort</h2>
+        <input type="text" name="title">
+        <input type="submit" value="szukaj">
+    </form>
+    <form action="/clear" method="get" class="ind_form search">
+        <h2>Wyszukaj wg tytułu z sort</h2>
+        <input type="text" name="title">
+        <input type="submit" value="szukaj">
+        <br>
+        <select name="criterium">
+            <option value="genre">Gatunek</option>
+            <option value="price">Cena</option>
+        </select>
+        <select name="sort">
+            <option value="1">A-Z</option>
+            <option value="-1">Z-A</option>
+        </select>
+    </form>
+    {{#if admin}}
+        <a class="a_index" href="/admin">Panel admina</a>
+        <a class="a_index" href="/logoff">Wyloguj się</a>
+    {{else}}
+        <a class="a_index" href="/login">Zaloguj się</a>
+        <a class="a_index" href="/user">Koszyk i kupione</a>
+    {{/if}}
+    <aside>
+        Paweł Perek @ 2017 - 2018
+    </aside>
+</div>

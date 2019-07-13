@@ -1,0 +1,57 @@
+<div id="allog">
+    <footer>
+        <button class="footer button2">Powrót</button>
+        <form action="/buy">
+            <input class="footer" type="submit" value="Kup">
+        </form>
+    </footer>
+</div>
+
+<script>
+    $(document).ready(function() {
+            let prices = [];
+            let table = $("<table>");
+            for(let el of range(localStorage.length)){
+                let content = JSON.parse(localStorage.getItem(localStorage.key(el)));
+                let tr = $("<tr>");
+                for(let items in content){
+                    let td = $("<td>");
+                    if(typeof content[items] == 'number') {
+                        prices.push(content[items]);
+                        td.text(content[items] + "zł");
+                    }
+                    else {
+                        $("form").append($("<input type='hidden'>").attr("name", "title").val(content[items]));
+                        td.text(content[items])
+                    }
+                    $(tr).append(td);
+                }
+                $(tr).append(
+                    $("<td>")
+                        .text("X")
+                        .addClass("del")
+                        .on("click", function() {
+                            localStorage.removeItem(localStorage.key(el));
+                            location.reload();
+                        })
+                    )
+                $(table).append(tr);
+            }
+            if(prices.length == 0)
+                prices.push(0);
+            $(table).append($("<tr>").append(
+                $("<th>").text("Suma"), 
+                $("<th>").text(prices.reduce((p, n) => p + n) + "zł")
+            ))
+            table.addClass("column")
+            $(table).attr("id", "tbl")
+            $("#allog").append(table);
+        $("input").on("click", () => {
+            localStorage.clear();
+        })
+        $(".button2").on("click", function() {
+            document.location.href = "/";
+        })
+    })
+    
+</script>

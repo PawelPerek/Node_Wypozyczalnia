@@ -1,0 +1,178 @@
+<header>
+    <nav>
+        <form class="res-form search" action="/clear" method="get">
+            <h4>Wyszukaj według tytułu</h4>
+            <input type="text" name="title">
+            <input type="submit" value="szukaj">
+        </form>
+        <form class="res-form search" action="/clear" method="get">
+            <h4>Wyszukaj według gatunku</h4>
+            <input type="text" name="title">
+            <input type="submit" value="szukaj">
+            <select name="criterium">
+                <option value="genre">Gatunek</option>
+                <option value="price">Cena</option>
+            </select>
+            <select name="sort">
+                <option value="1">A-Z</option>
+                <option value="-1">Z-A</option>
+            </select>
+    </nav>
+    <div id="headbox">
+        <a id="mpage" href="/">
+            <h1>Cinemall</h1>
+        </a>
+    </div>
+
+</header>
+
+<main>
+    {{#each docs}}
+    <figure>
+        <img class="cardimg" src="/{{src}}" alt="film">
+        <p>{{description}}</p>
+        <figcaption>
+            <h3>{{title}}</h3>
+            <var>Gatunek: {{genre}}</var>
+            <blockquote>Cena: {{currency price}}</blockquote>
+            {{#if ../admin}}
+            <a class="profilelink" href="/item/{{id}}">Edycja</a>
+            <a class="profilelink" href="/delete/{{id}}">Usuń</a>
+            {{else}}
+            <a class="profilelink add" href="#">Dodaj do koszyka</a>
+            {{/if}}
+        </figcaption>
+    </figure>
+    {{/each}}
+</main>
+<footer>
+    <form action=""></form>
+    <form action="/changeDir">
+        {{#if crit}}
+        <input type="hidden" name="criterium" value="{{crit.criterium}}">
+        <input type="hidden" name="sort" value="{{crit.sort}}"> {{/if}}
+        <input type="hidden" name="dir" value="minus">
+        <input type="submit" value="<<">
+    </form>
+    <img id="list_table" src="/grid.png">
+    <form action="/changeDir">
+        {{#if crit}}
+        <input type="hidden" name="criterium" value="{{crit.criterium}}">
+        <input type="hidden" name="sort" value="{{crit.sort}}"> {{/if}}
+        <input type="hidden" name="dir" value="plus">
+        <input type="submit" value=">>">
+    </form>
+</footer>
+<aside id="copyright">
+    Paweł Perek @ 2017 - 2018
+</aside>
+{{#unless admin}}
+<script>
+    $(document).ready(function () {
+        var func = function () {
+            let item = $(this).parent().parent();
+            let objs = {
+                title: item.find("h3").text(),
+                price: parseInt(item.find("blockquote").text().split(":") [1])
+            };
+            let num = 0;
+            let dd = [];
+            for(let el of range(localStorage.length)) {
+                console.log(el)
+                let tmp = localStorage.key(el)
+                dd.push(Number(tmp.slice(4, 5)));
+            }
+            while(true) {
+                if(!dd.includes(num))
+                    break;
+                else;
+                    num++;
+            }
+            localStorage.setItem("item" + num, JSON.stringify(objs));
+            checkItems();
+        }
+        $(".add").on("click", func)
+
+        checkItems = function () {
+            let dd = [];
+            $("h3").each(function () {
+                for (let movie = 0; movie < localStorage.length; movie++)
+                    if ($(this).text() == JSON.parse(localStorage.getItem(localStorage.key(movie))).title)
+                        dd.push(this);
+            })
+            for (let node in dd) {
+                $(dd[node]).parent().find("a").replaceWith($("<quote>").text("W koszyku").off("click", func))
+            }
+        }
+        checkItems();
+    })
+</script> 
+{{/unless}}
+<script>
+    $(document).ready(function () {
+        change = function () {
+            if (!Cookie.valueOf("layout")) {
+                $("main").children().each(function () {
+                    let tmp = $(this).children("figcaption");
+                    let desc = $(tmp).children("poj") [0];
+                    let a = $(tmp).children("poj") [1]
+                    $(tmp).append($(desc).children(), $(a).children());
+                    $(tmp).children("poj").remove();
+                })
+                $("*").removeAttr("style");
+            }
+            else {
+                $("main").css({
+                    'flex-direction': "column",
+                    'align-content': "space-around"
+                })
+                $("figure").css({
+                    width: "100%",
+                    height: "20%"
+                })
+                $(".cardimg").css({
+                    height: "100%",
+                    width: "10%",
+                    "border-right": "2px solid silver",
+                    "border-bottom": "0"
+                })
+                $("p").css({
+                    height: "100%",
+                    width: "10%",
+                    "border-right": "2px solid silver",
+                    "border-bottom": "0"
+                })
+                $("figcaption").css({
+                    "flex-direction": "row",
+                    width: "90%",
+                    height: "100%",
+                })
+                $(".profilelink").css("height", "33%");
+                $("main").children().each(function () {
+                    let div1 = $("<poj>");
+                    $(div1).append($(this).find("var"), $(this).find("blockquote"));
+                    let div2 = $("<poj>");
+                    $(div2).append($(this).find(".profilelink"));
+                    $(div2).append($(this).find("quote"));
+                    $(div2).css({
+                        height: "100%",
+                        width: "33%",
+                        display: "flex",
+                        "flex-direction": "column",
+                        "justify-content": "space-around"
+                    });
+                    $(this).children("figcaption").append(div1, div2)
+                })
+
+            }
+        }
+        $("#list_table").on("click", function () {
+            if (Cookie.valueOf("layout"))
+                Cookie.delete("layout");
+            else
+                Cookie.add('layout', true);
+            change();
+        })
+        change();
+    })
+</script>

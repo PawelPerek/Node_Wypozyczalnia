@@ -1,0 +1,242 @@
+$main_color: #222
+$secondary_color: #1ee2bb
+$third_color: silver
+$font_color: white
+
+*
+  margin: 0
+  padding: 0
+
+body
+  height: 100vh
+  width: 100vw
+  background-color: $main_color
+  color: $font_color
+  font-family: 'Roboto Mono', monospace
+
+#all
+  height: 100%
+  width: 100%
+  display: flex
+  justify-content: space-around
+  align-items: center
+  flex-direction: column
+
+#allog
+  height: 100%
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+
+.login_width 
+    width: 250px
+
+#adminform
+  display: flex
+  flex-direction: column
+  input
+    float: right
+
+.add_width
+  width: 330px
+
+.check
+  width: 200px
+  height: 50px
+  transition: .3s
+  border: 0
+  &:hover
+    background: $secondary_color
+
+.cardimg
+  z-index: -100
+  position: relative
+  top: 0
+  height: 50%
+  width: 100%
+  border-bottom: solid $third_color 2px
+  box-sizing: border-box
+
+.a_admin
+  height: 100px
+
+#mpage
+  background-color: $main_color
+  color: $font_color
+
+.search
+  border: 2px solid $third_color
+  box-sizing: border-box
+
+.profilelink
+  width: 100% !important
+  height: 15%
+
+.res-form
+  height: 50%
+
+.add_form input
+  right: 0
+
+header
+  height: 150px
+  box-sizing: border-box
+  border-bottom: 2px solid $third_color
+
+nav
+  float: left
+  height: 100%
+  width: 250px
+
+main
+  display: flex
+  align-items: center
+  justify-content: space-around
+  position: relative
+  height: calc(100% - 150px - 20px)
+
+#list_table
+  position: relative
+  height: 30px !important
+  width: 30px !important
+  bottom: 0
+
+figure
+  position: relative
+  border: 2px solid $third_color
+  width: 20%
+  height: 80%
+  box-sizing: border-box
+
+#logo
+  height: 100% !important
+  float: right
+  width: 150px !important
+
+#headbox
+  width: calc(100% - 250px - 150px)
+  height: 100%
+  float: left
+  display: flex
+  justify-content: center
+  align-items: center
+
+.error
+  color: red
+
+.warning
+  color: orange
+
+footer
+  position: absolute
+  bottom: 0
+  display: flex
+  justify-content: space-around
+  width: 100%
+
+#copyright
+  position: absolute
+  right: 0
+  bottom: 0
+
+.a_index
+  height: 60px
+
+#alog
+  height: 20px
+
+.footer
+  width: 200px
+  height: 30px
+
+.button2
+  transition: .3s
+  border: 0
+  &:hover
+    background-color: $secondary_color
+
+a
+  &:link, &:visited
+    background-color: #eeeeee
+    color: #222222  
+    text-align: center
+    width: 500px
+    text-decoration: none
+    transition: .3s
+    display: flex
+    justify-content: center
+    align-items: center
+
+input[type="submit"]
+  transition: .3s
+  padding: 2px
+  border: 0
+  &:hover
+    background-color: $secondary_color
+
+a
+  &:hover, &:active
+    background-color: $secondary_color
+
+#internal_logo
+  width: 200px
+
+#body
+  height: 100vh
+  width: 100vw
+
+.row
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+
+.column
+  width: 400px
+  text-align: center
+
+#gb
+  position: absolute
+
+#tbl
+  border: $third_color 2px solid
+  td
+    border: $third_color 2px solid
+    padding: 5px
+  th
+    border: $third_color 2px solid
+
+p
+  background-color: black
+  z-index: 10
+  position: absolute
+  top: 0
+  opacity: 0
+  overflow: hidden
+  height: 50%
+  border-bottom: solid $third_color 2px
+  box-sizing: border-box
+
+figcaption
+  height: 50%
+  width: 100%
+  display: flex
+  justify-content: space-around
+  align-items: center
+  flex-direction: column
+  float: right
+
+.ind_form
+  padding: 20px
+  width: 500px
+
+.del
+  margin: 10px
+  padding: 6px
+  background-color: $third_color
+  color: red
+
+h3
+  text-align: center
